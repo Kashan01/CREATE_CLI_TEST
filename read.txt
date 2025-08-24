@@ -1,0 +1,1 @@
+This is a file and i want to count total numbers of words in this file one two three four.

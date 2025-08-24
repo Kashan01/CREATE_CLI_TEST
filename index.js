@@ -3,6 +3,8 @@
 const { Command } = require('commander');
 const fs = require('fs')
 const program = new Command();
+const data = require('./todo.json');
+
 
 // Setup basic program info
 program
@@ -39,14 +41,6 @@ program
     console.log(message);
   });
 
-// Default action if no command provided
-program
-  .action(() => {
-    console.log('Welcome to the simple CLI!');
-    console.log('Use --help to see available commands.');
-  });
-
-
   // Read total words in file....
   program
   .command('count <filepath>')
@@ -62,6 +56,21 @@ program
   console.log(`There are total ${count} word in this file.`);
 });
 });
+
+//CURD OPERATIOINS USING CLI
+program
+  .command('manage <keyword> <operation...>') 
+  .description('Manage tasks: add, delete, or mark as done')
+  .action((keyword, operation) => {
+
+    let newTask = {}
+    newTask['taskID'] = data.length + 1
+    newTask['message']=operation.join(' ')
+    newTask['isDone']=0
+    data.push(newTask)
+    console.log(data)   
+  });
+
 
 // Parse command line arguments
 program.parse();
